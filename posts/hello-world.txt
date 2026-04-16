@@ -1,0 +1,6 @@
+title: Hello World
+date: 2026-04-16
+---
+This is my first post.
+
+Welcome to my blog!

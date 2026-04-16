@@ -1,0 +1,145 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background-color: #c0c0c0;
+    color: #000000;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Windows 95-style outer frame */
+.page-frame {
+    max-width: 680px;
+    margin: 0 auto;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    background: #c0c0c0;
+}
+
+.title-bar {
+    background: #000080;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 8px;
+}
+
+.page-content {
+    margin: 8px;
+    padding: 16px;
+    background: #ffffff;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+}
+
+/* Header */
+header {
+    border-bottom: 2px solid #000080;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+header a {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000080;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Main content */
+main {
+    min-height: 300px;
+}
+
+h1 {
+    font-size: 22px;
+    color: #800000;
+    margin-bottom: 4px;
+}
+
+h2 {
+    font-size: 18px;
+    color: #800000;
+    margin-bottom: 4px;
+}
+
+time {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #808080;
+    margin-bottom: 16px;
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+a {
+    color: #0000ee;
+}
+
+a:visited {
+    color: #551a8b;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 16px 0;
+}
+
+/* Index post list */
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid #c0c0c0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.post-list li:last-child {
+    border-bottom: none;
+}
+
+.post-list a {
+    color: #0000ee;
+}
+
+.post-list span {
+    color: #808080;
+    font-size: 12px;
+    white-space: nowrap;
+    margin-left: 16px;
+}
+
+/* Status bar */
+.status-bar {
+    background: #c0c0c0;
+    border-top: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    padding: 3px 8px;
+    color: #000000;
+    margin-top: 8px;
+}
