@@ -18,10 +18,9 @@ body {
     height: 100%;
 }
 
-/* Windows 95-style outer frame */
 .page-frame {
-    max-width: 680px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     border: 2px solid;
     border-color: #ffffff #808080 #808080 #ffffff;
     background: #c0c0c0;
@@ -138,7 +137,6 @@ hr {
     margin-left: 16px;
 }
 
-/* Status bar */
 .status-bar {
     background: #c0c0c0;
     border-top: 2px solid;

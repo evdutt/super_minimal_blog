@@ -91,6 +91,7 @@ def build():
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir()
+    (OUTPUT_DIR / "CNAME").write_text("www.everettdutton.com\n", encoding="utf-8")
 
     if STATIC_DIR.exists():
         shutil.copytree(STATIC_DIR, OUTPUT_DIR / "static")
