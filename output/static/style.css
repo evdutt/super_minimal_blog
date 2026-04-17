@@ -19,34 +19,46 @@ body {
 }
 
 .page-frame {
-    max-width: 100%;
-    margin: 0;
+    max-width: 680px;
+    margin: 0 auto;
     border: 2px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
+    border-color: #ffffef #808080 #808080 #ffffef;
     background: #c0c0c0;
     min-height: 100vh;
-}
-
-.title-bar {
-    background: #000080;
-    color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 3px 8px;
+    display: flex;
+    flex-direction: column;
 }
 
 .page-content {
     margin: 8px;
     padding: 16px;
-    background: #ffffff;
+    background: #ffffef;
     border: 2px solid;
-    border-color: #808080 #ffffff #ffffff #808080;
+    border-color: #808080 #ffffef #ffffef #808080;
+    flex: 1;  /* this makes it fill the remaining height */
+}
+
+.title-bar {
+    background: #005f09;
+    color: #ffffef;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 3px 8px;
+}
+
+.title-bar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.title-bar a:hover {
+    text-decoration: underline;
 }
 
 /* Header */
 header {
-    border-bottom: 2px solid #000080;
+    border-bottom: 2px solid #005f09;
     padding-bottom: 8px;
     margin-bottom: 16px;
 }
@@ -81,7 +93,7 @@ h2 {
 
 time {
     display: block;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Times New Roman", Times, serif;
     font-size: 12px;
     color: #808080;
     margin-bottom: 16px;
@@ -102,7 +114,7 @@ a:visited {
 hr {
     border: none;
     border-top: 2px solid #808080;
-    border-bottom: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffef;
     margin: 16px 0;
 }
 
@@ -118,7 +130,7 @@ hr {
     align-items: baseline;
     padding: 6px 0;
     border-bottom: 1px solid #c0c0c0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Times New Roman", Times, serif;
     font-size: 14px;
 }
 
@@ -140,8 +152,8 @@ hr {
 .status-bar {
     background: #c0c0c0;
     border-top: 2px solid;
-    border-color: #808080 #ffffff #ffffff #808080;
-    font-family: Arial, Helvetica, sans-serif;
+    border-color: #808080 #ffffef #ffffef #808080;
+    font-family: "Times New Roman", Times, serif;
     font-size: 11px;
     padding: 3px 8px;
     color: #000000;
