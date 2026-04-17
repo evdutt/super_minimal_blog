@@ -4,13 +4,18 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: "Times New Roman", Times, serif;
     background-color: #c0c0c0;
     color: #000000;
-    padding: 16px;
+    padding: 0;
     font-size: 16px;
     line-height: 1.6;
+    height: 100%;
 }
 
 /* Windows 95-style outer frame */
@@ -20,6 +25,7 @@ body {
     border: 2px solid;
     border-color: #ffffff #808080 #808080 #ffffff;
     background: #c0c0c0;
+    min-height: 100vh;
 }
 
 .title-bar {

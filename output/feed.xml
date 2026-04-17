@@ -4,11 +4,18 @@
     <title>Everett Dutton's Blog</title>
     <link>https://www.everettdutton.com</link>
     <description>Everett Dutton's Blog</description>
-    <lastBuildDate>Thu, 16 Apr 2026 22:48:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Apr 2026 22:25:45 +0000</lastBuildDate>
     <atom:link href="https://www.everettdutton.com/feed.xml"
                rel="self" type="application/rss+xml"
                xmlns:atom="http://www.w3.org/2005/Atom"/>
 
+  <item>
+    <title>Hello World 3</title>
+    <link>https://www.everettdutton.com/hello-world-3.html</link>
+    <guid>https://www.everettdutton.com/hello-world-3.html</guid>
+    <pubDate>Fri, 17 Apr 2026 00:00:00 +0000</pubDate>
+    <description><![CDATA[<p>This is my third post.</p><p>Welcome to my next blog!</p>]]></description>
+  </item>
   <item>
     <title>Hello World</title>
     <link>https://www.everettdutton.com/hello-world.html</link>
