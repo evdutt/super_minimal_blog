@@ -1,47 +1,55 @@
 # Super Minimal Blog
 
-A static blog generator built with Python. Zero dependencies, just drop .txt files and deploy to GitHub Pages.
+A static site generator in a single Python file. Zero dependencies — just the stdlib. Write posts as plain `.txt` files and deploy to GitHub Pages.
 
-## Features
+## What it generates
 
-- Write posts in plain .txt files
-- Draft support
-- RSS feed
-- 90s Windows 95 style CSS
-- Free hosting on GitHub Pages
-- DDoS protection via Cloudflare
+- Individual post pages (`posts/<slug>.html`)
+- Index page listing all posts by date
+- RSS feed (`feed.xml`)
+- Sitemap (`sitemap.xml`)
+- `robots.txt`
 
 ## Setup
 
-1. Clone or create this repo on GitHub.
+1. Fork or clone this repo.
 
-2. Edit `build.py` to set your `SITE_TITLE` and `SITE_URL`.
+2. Edit the config block at the top of `build.py`:
+   ```python
+   SITE_TITLE = "Your Blog Name"
+   SITE_URL = "https://yourdomain.com"
+   ```
 
-3. For custom domain:
-   - Edit `CNAME` with your domain.
-   - Point your domain's DNS to GitHub Pages IPs.
-   - Sign up for Cloudflare (free) and move your nameservers there for protection and analytics.
+3. For a custom domain, edit `CNAME` with your domain and configure DNS to point to GitHub Pages.
 
-4. Push to GitHub. The GitHub Action will build and deploy automatically.
+4. Push to `main`. The GitHub Actions workflow builds the site and deploys it to GitHub Pages automatically.
 
-## Writing Posts
+## Writing posts
 
-Create files in `posts/` with format:
+Create `.txt` files in `posts/`. The filename becomes the URL slug.
 
 ```
 title: My Post Title
-date: 2026-04-16
-draft: false  # optional, defaults to false
+date: 2026-04-17
+draft: false
 ---
-Post content here.
+First paragraph here.
 
-Paragraphs separated by blank lines.
+Second paragraph here. Blank lines separate paragraphs.
 ```
 
-## Building Locally
+- `title` and `date` (YYYY-MM-DD) are required.
+- `draft: true` excludes a post from the build.
+- No Markdown — body is plain text. Each blank-line-separated block becomes a `<p>` tag.
 
-Run `python build.py` to generate the site in `output/`.
+## Building locally
+
+```
+python build.py
+```
+
+Output goes to `output/`. Open `output/index.html` in a browser to preview.
 
 ## Deployment
 
-On push to `main`, GitHub Actions runs the build and deploys to `gh-pages` branch.
+On every push to `main`, GitHub Actions runs `python build.py` and deploys the `output/` directory to GitHub Pages via the official `actions/deploy-pages` action.
