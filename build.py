@@ -32,7 +32,7 @@ I design practical agentic analytics solutions that combine methods like:
 - forecasting and decision support
 - custom analytics workflows
 
-The work is tailored to the real constraints of your systems and teams, with a focus on measurable outcomes.
+I specialize in working with clients struggling with data quality and lack of clarity around their decision problems.
 
 If you would like to chat about a project, please connect with me on [LinkedIn](https://www.linkedin.com/in/everett-dutton).
 """
