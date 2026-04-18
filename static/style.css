@@ -220,17 +220,19 @@ a:hover { color: var(--accent-deep); }
   border-bottom: 1px solid var(--rule);
   margin-bottom: 36px;
 }
-.post-header .back {
+.post-header .back,
+.post-foot .return-index a {
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: .08em;
   color: var(--muted);
   text-transform: uppercase;
-  margin-bottom: 22px;
   display: inline-block;
   text-decoration: none;
 }
-.post-header .back:hover { color: var(--accent); }
+.post-header .back { margin-bottom: 22px; }
+.post-header .back:hover,
+.post-foot .return-index a:hover { color: var(--accent); }
 .post-header h1 {
   font-family: var(--serif);
   font-size: 40px;
@@ -424,12 +426,8 @@ a:hover { color: var(--accent-deep); }
 .post-foot .pager a:hover .title { color: var(--accent); }
 .post-foot .pager .next { text-align: right; }
 .post-foot .return-index {
-  font-family: var(--mono);
-  font-size: 12px;
   text-align: center;
 }
-.post-foot .return-index a { color: var(--muted); text-decoration: none; }
-.post-foot .return-index a:hover { color: var(--accent); }
 .post-foot .colophon {
   font-family: var(--mono);
   font-size: 11px;
