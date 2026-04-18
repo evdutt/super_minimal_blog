@@ -4,6 +4,10 @@ date: 2026-04-18
 
 Software systems in the "agentic era" can be characterized by what controls the outer loop (orchestration) and what does the inner work (execution). Each axis is either LLM (probabilistic, flexible) or Deterministic (coded, predictable).
 
+LLM Outer        Deterministic Outer
+LLM Inner        Agents       LLM in Loop / Function
+Deterministic    Bare LLM     Standard Software
+
 ---
 
 1. LLM Outside, Deterministic Inside - Agents with Tools
@@ -14,7 +18,7 @@ Trade-off: High flexibility, low predictability. The agent may reach the right d
 
 ---
 
-2. Deterministic Outside, LLM Inside - LLM in a Loop
+2. Deterministic Outside, LLM Inside - LLM in a Loop / Function
 Deterministic code drives the workflow - iterating, branching, and managing state - while an LLM handles the fuzzy parts: understanding, summarizing, classifying, or generating content at each step.
 
 Examples: Web scrapers with LLM-powered content extraction, batch document analysis pipelines
