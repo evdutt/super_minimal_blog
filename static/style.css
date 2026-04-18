@@ -86,7 +86,7 @@ a:hover { color: var(--accent-deep); }
   height: 74px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--rule);
+  border: 1px solid #1f5f2a;
   background: color-mix(in oklab, var(--paper) 92%, var(--accent));
   flex-shrink: 0;
 }
