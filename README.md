@@ -1,14 +1,6 @@
 # Super Minimal Blog
 
-A static site generator in a single Python file. Zero dependencies — just the stdlib. Write posts as plain `.txt` files and deploy to GitHub Pages.
-
-## What it generates
-
-- Individual post pages (`posts/<slug>.html`)
-- Index page listing all posts by date
-- RSS feed (`feed.xml`)
-- Sitemap (`sitemap.xml`)
-- `robots.txt`
+Liked my blog and want to copy it? Go ahead! There are no dependencies. It's a custom Python builder that runs on GitHub actions, and can be hosted for free on GitHub pages. You'll just need a domain name (actually you don't even *need* that).
 
 ## Setup
 
@@ -41,14 +33,6 @@ Second paragraph here. Blank lines separate paragraphs.
 - `title` and `date` (YYYY-MM-DD) are required.
 - `draft: true` excludes a post from the build.
 - No Markdown — body is plain text. Each blank-line-separated block becomes a `<p>` tag.
-
-## Building locally
-
-```
-python build.py
-```
-
-Output goes to `output/`. Open `output/index.html` in a browser to preview.
 
 ## Deployment
 
