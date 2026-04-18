@@ -18,6 +18,24 @@ SITE_TITLE       = "Everett Dutton's Blog"
 SITE_URL         = "https://www.everettdutton.com"
 SITE_DESCRIPTION = "Writing on society, systems, and technology."
 MARKDOWN_EXTENSIONS = ["extra", "sane_lists", "smarty"]
+CONSULTING_PAGE_SLUG = "consulting"
+CONSULTING_PAGE_TITLE = "Dutton Solutions LLC"
+CONSULTING_PAGE_DESCRIPTION = "Operations research consulting focused on agentic analytics, machine learning, simulation, and optimization."
+CONSULTING_PAGE_BODY_MD = """
+Dutton Solutions LLC provides operations research consulting for teams that need better, faster decisions.
+
+I design practical agentic analytics solutions that combine methods like:
+
+- machine learning
+- simulation
+- optimization
+- forecasting and decision support
+- custom analytics workflows
+
+The work is tailored to the real constraints of your systems and teams, with a focus on measurable outcomes.
+
+If you would like to chat about a project, please connect with me on [LinkedIn](https://www.linkedin.com/in/everett-dutton).
+"""
 # ----------------
 
 def apply_template(template, vars):
@@ -190,6 +208,14 @@ def render_index(posts, template):
         "POST_LIST":    items,
     })
 
+def render_page(title, description, body_markdown, template):
+    return apply_template(template, {
+        "SITE_TITLE":   html.escape(SITE_TITLE),
+        "TITLE":        html.escape(title),
+        "DESCRIPTION":  html.escape(description),
+        "BODY":         markdown_to_html(body_markdown.strip()),
+    })
+
 def render_rss(posts):
     def rss_date(dt):
         return dt.replace(tzinfo=timezone.utc).strftime("%a, %d %b %Y %H:%M:%S +0000")
@@ -222,12 +248,15 @@ def render_rss(posts):
 def render_robots():
     return f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
 
-def render_sitemap(posts):
+def render_sitemap(posts, extra_paths=None):
     newest_date = posts[0]["date"] if posts else ""
+    default_lastmod = newest_date or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     root_lastmod = f"<lastmod>{newest_date}</lastmod>" if newest_date else ""
     urls = f"  <url><loc>{SITE_URL}/</loc>{root_lastmod}</url>\n"
     for post in posts:
         urls += f"  <url><loc>{SITE_URL}/{url_quote(post['slug'])}.html</loc><lastmod>{post['date']}</lastmod></url>\n"
+    for path in extra_paths or []:
+        urls += f"  <url><loc>{SITE_URL}/{path}</loc><lastmod>{default_lastmod}</lastmod></url>\n"
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {urls}</urlset>"""
@@ -237,7 +266,8 @@ def build():
         raise FileNotFoundError(f"Posts directory '{POSTS_DIR}' not found")
     post_template_path  = Path("templates/post.html")
     index_template_path = Path("templates/index.html")
-    for p in (post_template_path, index_template_path):
+    page_template_path = Path("templates/page.html")
+    for p in (post_template_path, index_template_path, page_template_path):
         if not p.exists():
             raise FileNotFoundError(f"Template '{p}' not found")
 
@@ -255,6 +285,7 @@ def build():
 
     post_template  = post_template_path.read_text(encoding="utf-8")
     index_template = index_template_path.read_text(encoding="utf-8")
+    page_template = page_template_path.read_text(encoding="utf-8")
 
     all_posts = []
     errors = []
@@ -290,11 +321,21 @@ def build():
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     print(f"  built:   index.html")
 
+    consulting_html = render_page(
+        CONSULTING_PAGE_TITLE,
+        CONSULTING_PAGE_DESCRIPTION,
+        CONSULTING_PAGE_BODY_MD,
+        page_template,
+    )
+    consulting_filename = f"{CONSULTING_PAGE_SLUG}.html"
+    (OUTPUT_DIR / consulting_filename).write_text(consulting_html, encoding="utf-8")
+    print(f"  built:   {consulting_filename}")
+
     rss_xml = render_rss(posts)
     (OUTPUT_DIR / "feed.xml").write_text(rss_xml, encoding="utf-8")
     print(f"  built:   feed.xml")
 
-    sitemap_xml = render_sitemap(posts)
+    sitemap_xml = render_sitemap(posts, extra_paths=[consulting_filename])
     (OUTPUT_DIR / "sitemap.xml").write_text(sitemap_xml, encoding="utf-8")
     print(f"  built:   sitemap.xml")
 

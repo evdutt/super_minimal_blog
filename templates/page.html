@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{TITLE}} — {{SITE_TITLE}}</title>
   <meta name="description" content="{{DESCRIPTION}}">
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:title" content="{{TITLE}}">
   <meta property="og:description" content="{{DESCRIPTION}}">
   <meta property="og:site_name" content="{{SITE_TITLE}}">
@@ -27,9 +27,6 @@
       <header class="post-header">
         <a href="/" class="back">← All Posts</a>
         <h1>{{TITLE}}</h1>
-        <div class="post-meta">
-          <span>{{DATE}}</span>
-        </div>
       </header>
 
       <div class="post-body">
@@ -37,7 +34,7 @@
       </div>
 
       <div class="post-foot">
-        {{PAGER}}
+        <div class="return-index"><a href="/">← Return to Index</a></div>
         <div class="colophon">
           <span><a href="/">© 2026 Everett Dutton</a></span>
         </div>
