@@ -76,6 +76,20 @@ a:hover { color: var(--accent-deep); }
   border-bottom: 1px solid var(--rule);
   margin-bottom: 40px;
 }
+.masthead .masthead-intro {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.masthead .profile-photo {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  background: color-mix(in oklab, var(--paper) 92%, white);
+  flex-shrink: 0;
+}
 .masthead .eyebrow {
   font-family: var(--mono);
   font-size: 11px;
@@ -434,6 +448,11 @@ a:hover { color: var(--accent-deep); }
 @media (max-width: 640px) {
   .shell { padding: 0 20px 48px; }
   .titlebar { margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
+  .masthead .masthead-intro { gap: 14px; }
+  .masthead .profile-photo {
+    width: 62px;
+    height: 62px;
+  }
   .masthead h1 { font-size: 30px; }
   .post-header h1 { font-size: 28px; }
   .post-body table {
