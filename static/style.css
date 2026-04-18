@@ -130,7 +130,6 @@ a:hover { color: var(--accent-deep); }
   align-items: baseline;
   gap: 10px;
 }
-.section-label .count { color: var(--rule); }
 
 /* ----------------------------------------------------------
    Post list (excerpts layout)
