@@ -75,9 +75,9 @@ def render_post(post, template, prev_post=None, next_post=None):
             f'</a>'
             if next_post else ''
         )
-        pager = f'<div class="pager">{prev_part}{next_part}</div>'
+        pager = f'<div class="pager">{prev_part}{next_part}</div><div class="return-index"><a href="/">← Return to Index</a></div>'
     else:
-        pager = ''
+        pager = '<div class="return-index"><a href="/">← Return to Index</a></div>'
 
     return apply_template(template, {
         "SITE_TITLE":      html.escape(SITE_TITLE),
@@ -100,7 +100,7 @@ def render_index(posts, template):
             f'<div class="date">{html.escape(short_date)}</div>'
             f'<div class="main">'
             f'<div class="title-line"><a href="{html.escape(p["slug"])}.html">{html.escape(p["title"])}</a></div>'
-            f'<div class="excerpt">{html.escape(excerpt)}</div>'
+            f'<div class="excerpt"><a href="{html.escape(p["slug"])}.html">{html.escape(excerpt)}</a></div>'
             f'</div>'
             f'</li>\n'
         )
