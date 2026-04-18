@@ -344,11 +344,14 @@ a:hover { color: var(--accent-deep); }
 }
 .post-body th {
   background: var(--accent-soft);
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: .04em;
-  text-transform: uppercase;
+  font-family: var(--serif);
+  font-size: 16px;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--ink);
+}
+.post-body td:first-child {
+  background: var(--accent-soft);
 }
 .post-body hr {
   border: 0;
