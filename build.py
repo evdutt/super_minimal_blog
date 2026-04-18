@@ -5,6 +5,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote as url_quote
 
+try:
+    import markdown as md
+except ImportError as exc:
+    raise SystemExit("Missing dependency 'markdown'. Install it with: pip install markdown") from exc
+
 # ---- config ----
 POSTS_DIR        = Path("posts")
 OUTPUT_DIR       = Path("output")
@@ -12,6 +17,7 @@ STATIC_DIR       = Path("static")
 SITE_TITLE       = "Everett Dutton's Blog"
 SITE_URL         = "https://www.everettdutton.com"
 SITE_DESCRIPTION = "Writing on society, systems, and technology."
+MARKDOWN_EXTENSIONS = ["extra", "sane_lists", "smarty"]
 # ----------------
 
 def apply_template(template, vars):
@@ -22,43 +28,117 @@ def apply_template(template, vars):
         print(f"  WARNING: unresolved template token {token}")
     return result
 
+def markdown_to_html(text):
+    return md.markdown(text, extensions=MARKDOWN_EXTENSIONS, output_format="html5")
+
+def markdown_to_text(text):
+    rendered = markdown_to_html(text)
+    rendered = re.sub(r"<pre.*?</pre>", " ", rendered, flags=re.DOTALL)
+    rendered = re.sub(r"<code.*?</code>", " ", rendered, flags=re.DOTALL)
+    plain = re.sub(r"<[^>]+>", " ", rendered)
+    plain = html.unescape(plain)
+    return re.sub(r"\s+", " ", plain).strip()
+
+def summarize(text, limit):
+    cleaned = re.sub(r"\s+", " ", text).strip()
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[:limit].rstrip() + "\u2026"
+
+def parse_frontmatter_lines(lines):
+    meta = {}
+    for raw_line in lines:
+        line = raw_line.strip()
+        if not line:
+            continue
+        key, sep, value = line.partition(":")
+        if not sep:
+            return None
+        meta[key.strip().lower()] = value.strip()
+    return meta
+
+def split_frontmatter(raw):
+    # YAML-style frontmatter:
+    # ---
+    # title: ...
+    # date: ...
+    # ---
+    if raw.startswith("---"):
+        match = re.match(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", raw, flags=re.DOTALL)
+        if match:
+            meta = parse_frontmatter_lines(match.group(1).splitlines())
+            if meta is not None:
+                return meta, match.group(2)
+
+    # Backward-compatible legacy frontmatter:
+    # title: ...
+    # date: ...
+    # ---
+    # body
+    header, sep, body = raw.partition("\n---\n")
+    if sep:
+        meta = parse_frontmatter_lines(header.splitlines())
+        if meta is not None:
+            return meta, body
+
+    return {}, raw
+
+def derive_title_and_body(raw_title, body, slug):
+    title = raw_title.strip()
+    trimmed_body = body.strip()
+    if title:
+        return title, trimmed_body
+
+    lines = body.splitlines()
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        if stripped.startswith("# "):
+            heading_md = stripped[2:].strip()
+            heading_text = markdown_to_text(heading_md)
+            next_body = "\n".join(lines[i + 1:]).lstrip()
+            if heading_text:
+                return heading_text, next_body
+        break
+
+    fallback = slug.replace("-", " ").replace("_", " ").title()
+    return fallback, trimmed_body
+
 def parse_post(filepath):
     raw = filepath.read_text(encoding="utf-8")
-    header, sep, body = raw.partition("---")
-    if not sep:
-        raise ValueError(f"{filepath}: missing '---' separator between frontmatter and body")
-    meta = {}
-    for line in header.strip().splitlines():
-        key, _, val = line.partition(":")
-        meta[key.strip()] = val.strip()
-    title = meta.get("title", "").strip()
-    date  = meta.get("date", "").strip()
-    if not title:
-        raise ValueError(f"{filepath}: missing required frontmatter field 'title'")
-    if not date:
-        raise ValueError(f"{filepath}: missing required frontmatter field 'date'")
-    try:
-        parsed_date = datetime.strptime(date, "%Y-%m-%d")
-    except ValueError:
-        raise ValueError(f"{filepath}: 'date' must be YYYY-MM-DD, got {date!r}")
+    meta, body = split_frontmatter(raw)
+
+    title, body = derive_title_and_body(meta.get("title", ""), body, filepath.stem)
+    date = meta.get("date", "").strip()
+    if date:
+        try:
+            parsed_date = datetime.strptime(date, "%Y-%m-%d")
+        except ValueError:
+            raise ValueError(f"{filepath}: 'date' must be YYYY-MM-DD, got {date!r}")
+    else:
+        parsed_date = datetime.fromtimestamp(filepath.stat().st_mtime)
+        date = parsed_date.strftime("%Y-%m-%d")
+
+    body_markdown = body.strip()
+    body_html = markdown_to_html(body_markdown)
+    body_text = markdown_to_text(body_markdown) or title
+
     return {
         "title":       title,
         "date":        date,
         "parsed_date": parsed_date,
-        "draft":       meta.get("draft", "false").lower() == "true",
-        "body":        body.strip(),
+        "draft":       meta.get("draft", "false").strip().lower() in {"true", "1", "yes"},
+        "body":        body_markdown,
+        "body_html":   body_html,
+        "body_text":   body_text,
         "slug":        filepath.stem,
     }
 
 def render_post(post, template, prev_post=None, next_post=None):
     date_fmt = post["parsed_date"].strftime("%B %d, %Y")
     date_month_year = post["parsed_date"].strftime("%B %Y")
-    paragraphs = "".join(
-        f"<p>{html.escape(p.strip())}</p>\n"
-        for p in post["body"].split("\n\n") if p.strip()
-    )
-    first_para = post["body"].split("\n\n")[0].strip().replace("\n", " ")
-    description = first_para[:160] + ("\u2026" if len(first_para) > 160 else "")
+    description = summarize(post["body_text"], 160)
 
     if prev_post or next_post:
         prev_part = (
@@ -84,7 +164,7 @@ def render_post(post, template, prev_post=None, next_post=None):
         "TITLE":           html.escape(post["title"]),
         "DATE":            html.escape(date_fmt),
         "DATE_MONTH_YEAR": html.escape(date_month_year),
-        "BODY":            paragraphs,
+        "BODY":            post["body_html"],
         "DESCRIPTION":     html.escape(description),
         "PAGER":           pager,
     })
@@ -93,8 +173,7 @@ def render_index(posts, template):
     items = ""
     for p in posts:
         short_date = p["parsed_date"].strftime("%b %d, %Y")
-        first_para = p["body"].split("\n\n")[0].strip().replace("\n", " ")
-        excerpt = first_para[:200] + ("\u2026" if len(first_para) > 200 else "")
+        excerpt = summarize(p["body_text"], 200)
         items += (
             f'<li>'
             f'<div class="date">{html.escape(short_date)}</div>'
@@ -118,17 +197,13 @@ def render_rss(posts):
     items = ""
     for post in posts:
         url = f"{SITE_URL}/{url_quote(post['slug'])}.html"
-        paragraphs = "".join(
-            f"<p>{html.escape(p.strip())}</p>"
-            for p in post["body"].split("\n\n") if p.strip()
-        )
         items += f"""
   <item>
     <title>{html.escape(post['title'])}</title>
     <link>{url}</link>
     <guid>{url}</guid>
     <pubDate>{rss_date(post['parsed_date'])}</pubDate>
-    <description><![CDATA[{paragraphs}]]></description>
+        <description><![CDATA[{post['body_html']}]]></description>
   </item>"""
 
     newest = rss_date(posts[0]["parsed_date"]) if posts else ""
@@ -183,7 +258,7 @@ def build():
 
     all_posts = []
     errors = []
-    for f in POSTS_DIR.glob("*.txt"):
+    for f in POSTS_DIR.glob("*.md"):
         try:
             all_posts.append(parse_post(f))
         except ValueError as e:
@@ -209,7 +284,7 @@ def build():
         print(f"  built:   {post['slug']}.html")
 
     for post in drafts:
-        print(f"  skipped: {post['slug']}.txt (draft)")
+        print(f"  skipped: {post['slug']}.md (draft)")
 
     index_html = render_index(posts, index_template)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
