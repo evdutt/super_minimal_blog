@@ -13,19 +13,31 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="page-frame">
-    <div class="title-bar"><a href="/">{{SITE_TITLE}}</a> — {{TITLE}}</div>
-    <div class="page-content">
-      <main>
-        <h1>{{TITLE}}</h1>
-        <time>{{DATE}}</time>
-        <hr>
-        {{BODY}}
-        <hr>
-        <p><a href="/">← Back to index</a></p>
-      </main>
+  <div class="shell">
+    <div class="titlebar">
+      <span class="brand"><b><a href="/">{{SITE_TITLE}}</a></b></span>
     </div>
-    <div class="status-bar">Document: Done</div>
+
+    <article>
+      <header class="post-header">
+        <a href="/" class="back">← All Posts</a>
+        <h1>{{TITLE}}</h1>
+        <div class="post-meta">
+          <span>{{DATE}}</span>
+        </div>
+      </header>
+
+      <div class="post-body">
+        {{BODY}}
+      </div>
+
+      <div class="post-foot">
+        {{PAGER}}
+        <div class="colophon">
+          <span>Written in {{DATE_MONTH_YEAR}}.</span>
+        </div>
+      </div>
+    </article>
   </div>
 </body>
 </html>

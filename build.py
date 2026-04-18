@@ -11,7 +11,7 @@ OUTPUT_DIR       = Path("output")
 STATIC_DIR       = Path("static")
 SITE_TITLE       = "Everett Dutton's Blog"
 SITE_URL         = "https://www.everettdutton.com"
-SITE_DESCRIPTION = "Writing on software, business, and whatever else I find interesting."
+SITE_DESCRIPTION = "Writing on society, systems, and technology."
 # ----------------
 
 def apply_template(template, vars):
@@ -50,31 +50,64 @@ def parse_post(filepath):
         "slug":        filepath.stem,
     }
 
-def render_post(post, template):
+def render_post(post, template, prev_post=None, next_post=None):
     date_fmt = post["parsed_date"].strftime("%B %d, %Y")
+    date_month_year = post["parsed_date"].strftime("%B %Y")
     paragraphs = "".join(
         f"<p>{html.escape(p.strip())}</p>\n"
         for p in post["body"].split("\n\n") if p.strip()
     )
     first_para = post["body"].split("\n\n")[0].strip().replace("\n", " ")
     description = first_para[:160] + ("\u2026" if len(first_para) > 160 else "")
+
+    if prev_post or next_post:
+        prev_part = (
+            f'<a href="/{prev_post["slug"]}.html" class="prev">'
+            f'<span class="label">← Previous</span>'
+            f'<span class="title">{html.escape(prev_post["title"])}</span>'
+            f'</a>'
+            if prev_post else '<span></span>'
+        )
+        next_part = (
+            f'<a href="/{next_post["slug"]}.html" class="next">'
+            f'<span class="label">Next →</span>'
+            f'<span class="title">{html.escape(next_post["title"])}</span>'
+            f'</a>'
+            if next_post else ''
+        )
+        pager = f'<div class="pager">{prev_part}{next_part}</div>'
+    else:
+        pager = ''
+
     return apply_template(template, {
-        "SITE_TITLE":   html.escape(SITE_TITLE),
-        "TITLE":        html.escape(post["title"]),
-        "DATE":         html.escape(date_fmt),
-        "BODY":         paragraphs,
-        "DESCRIPTION":  html.escape(description),
+        "SITE_TITLE":      html.escape(SITE_TITLE),
+        "TITLE":           html.escape(post["title"]),
+        "DATE":            html.escape(date_fmt),
+        "DATE_MONTH_YEAR": html.escape(date_month_year),
+        "BODY":            paragraphs,
+        "DESCRIPTION":     html.escape(description),
+        "PAGER":           pager,
     })
 
 def render_index(posts, template):
-    items = "".join(
-        f'<li><a href="{html.escape(p["slug"])}.html">{html.escape(p["title"])}</a>'
-        f'<span>{html.escape(p["date"])}</span></li>\n'
-        for p in posts
-    )
+    items = ""
+    for p in posts:
+        short_date = p["parsed_date"].strftime("%b %d, %Y")
+        first_para = p["body"].split("\n\n")[0].strip().replace("\n", " ")
+        excerpt = first_para[:200] + ("\u2026" if len(first_para) > 200 else "")
+        items += (
+            f'<li>'
+            f'<div class="date">{html.escape(short_date)}</div>'
+            f'<div class="main">'
+            f'<div class="title-line"><a href="{html.escape(p["slug"])}.html">{html.escape(p["title"])}</a></div>'
+            f'<div class="excerpt">{html.escape(excerpt)}</div>'
+            f'</div>'
+            f'</li>\n'
+        )
     return apply_template(template, {
         "SITE_TITLE":   html.escape(SITE_TITLE),
         "DESCRIPTION":  html.escape(SITE_DESCRIPTION),
+        "POST_COUNT":   str(len(posts)),
         "POST_LIST":    items,
     })
 
@@ -168,8 +201,10 @@ def build():
         reverse=True,
     )
 
-    for post in posts:
-        html_out = render_post(post, post_template)
+    for i, post in enumerate(posts):
+        prev_post = posts[i + 1] if i + 1 < len(posts) else None  # older
+        next_post = posts[i - 1] if i > 0 else None               # newer
+        html_out = render_post(post, post_template, prev_post, next_post)
         (OUTPUT_DIR / f"{post['slug']}.html").write_text(html_out, encoding="utf-8")
         print(f"  built:   {post['slug']}.html")
 

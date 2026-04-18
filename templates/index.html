@@ -9,22 +9,31 @@
   <meta property="og:title" content="{{SITE_TITLE}}">
   <meta property="og:description" content="{{DESCRIPTION}}">
   <link rel="stylesheet" href="/static/style.css">
-  <link rel="alternate" type="application/rss+xml"
-        title="{{SITE_TITLE}}" href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{SITE_TITLE}}" href="/feed.xml">
 </head>
 <body>
-  <div class="page-frame">
-    <div class="title-bar"><a href="/">{{SITE_TITLE}}</a></div>
-    <div class="page-content">
-      <main>
-        <h2>Posts</h2>
-        <hr>
-        <ul class="post-list">{{POST_LIST}}</ul>
-        <hr>
-        <p><a href="/feed.xml">RSS Feed</a></p>
-      </main>
+  <div class="shell">
+    <div class="titlebar">
+      <span class="brand"><b><a href="/">{{SITE_TITLE}}</a></b></span>
     </div>
-    <div class="status-bar">Document: Done</div>
+
+    <div class="masthead">
+      <div class="eyebrow">Journal · Volume I</div>
+      <h1>Musings on society, systems, and technology.</h1>
+      <p class="tagline">Updated when I have something worth saying.</p>
+    </div>
+
+    <div class="section-label">
+      <span>Recent Writing</span>
+      <span class="count">· {{POST_COUNT}} entries</span>
+    </div>
+
+    <ul class="post-list">{{POST_LIST}}</ul>
+
+    <div class="index-foot">
+      <span class="rss-pill"><span class="rss-dot"></span><a href="/feed.xml">Subscribe via RSS</a></span>
+      <span>© 2026 · Everett Dutton</span>
+    </div>
   </div>
 </body>
 </html>
