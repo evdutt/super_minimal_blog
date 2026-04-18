@@ -87,7 +87,7 @@ a:hover { color: var(--accent-deep); }
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--rule);
-  background: color-mix(in oklab, var(--paper) 92%, white);
+  background: color-mix(in oklab, var(--paper) 92%, var(--accent));
   flex-shrink: 0;
 }
 .masthead .eyebrow {
