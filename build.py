@@ -26,11 +26,12 @@ Dutton Solutions LLC provides operations research consulting for teams that need
 
 I design practical agentic analytics solutions that combine methods like:
 
+- data collection and engineering
+- statistics
 - machine learning
 - simulation
 - optimization
-- forecasting and decision support
-- custom analytics workflows
+- LLMs
 
 I specialize in working with clients struggling with data quality and lack of clarity around their decision problems.
 

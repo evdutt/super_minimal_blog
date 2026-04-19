@@ -39,7 +39,7 @@ Deterministic code drives the workflow (iterating, branching, and managing state
 
 ### Quadrant 3: Probabilistic Orchestrator, Probabilistic Executor — *Two flavors*
 
-Both layers are probabilistic, but this quadrant contains two meaningfully different architectures:
+Both layers are probabilistic, but this Quadrant contains two meaningfully different architectures:
 
 **Unscaffolded — Raw chatbots.** A single model handles everything through conversation, with no deterministic scaffolding and no sub-agents (though with "thinking" now being common, this is getting rarer). Suited for open-ended interaction where consistent, auditable performance doesn't matter. The "architecture" is basically just a prompt.
 
@@ -61,7 +61,7 @@ No probabilistic components. Coded logic throughout. If-this-then-that, while, f
 
 ## Real Systems Are Composed of Multiple Nested Quadrants Calling Other Quadrants
 
-The 2×2 above is useful for characterizing individual components, but real architectures are rarely a single quadrant. They are instead graphs of nodes, where each node can be placed somewhere on the Punnet Square. The interesting engineering decisions happen at the edges between nodes, and when mixing directions of which nodes can call which other nodes.
+The 2×2 above is useful for characterizing individual components, but real architectures are rarely a single Quadrant. They are instead graphs of nodes, where each node can be placed somewhere on the Punnet Square. The interesting engineering decisions happen at the edges between nodes, and when mixing directions of which nodes can call which other nodes.
 
 Consider this pipeline:
 
@@ -73,7 +73,7 @@ Consider this pipeline:
         → [Deterministic] Write structured results to disk
 ```
 
-Read as a whole, this system alternates between quadrants 2 and 1 depending on which node is active. The outer shell is deterministic, the decision-making inside it is probabilistic, and the final write is deterministic again.
+Read as a whole, this system alternates between Quadrants 2 and 1 depending on which node is active. The outer shell is deterministic, the decision-making inside it is probabilistic, and the final write is deterministic again.
 
 You can add some predictability to any probabilistic node by wrapping it in a deterministic one. Want your LLM orchestrator to be more reliable? Constrain its action space with deterministic guards. You can also add flexibility (less brittleness) to your deterministic nodes. Want your pipeline to handle messier inputs? Insert a probabilistic executor at the ingestion step.
 
