@@ -11,7 +11,7 @@ In practice today (and in this post), probabilistic means an LLM. Technically, a
 |  | **Deterministic Executor** | **Probabilistic Executor** |
 |---|---|---|
 | **Probabilistic Orchestrator** | Agents with Tools | Autonomous Multi-Agent / Chatbot |
-| **Deterministic Orchestrator** | Standard Software | LLM in the Pipeline |
+| **Deterministic Orchestrator** | Standard Software | LLM in a Call |
 
 ---
 
