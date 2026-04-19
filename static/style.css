@@ -1,6 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
+  color-scheme: light;
   --bg: #e8e4d8;
   --paper: #fbf7ec;
   --ink: #1d1a14;
@@ -15,6 +16,21 @@
   --sans: system-ui, -apple-system, sans-serif;
   --measure: 62ch;
   --radius: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #14110d;
+    --paper: #1d1914;
+    --ink: #efe6d5;
+    --muted: #b6ab97;
+    --faint: #2c261f;
+    --rule: #3e352b;
+    --accent: #90cf98;
+    --accent-deep: #b9e7bf;
+    --accent-soft: #223326;
+  }
 }
 
 html, body { height: 100%; }
@@ -86,7 +102,7 @@ a:hover { color: var(--accent-deep); }
   height: 74px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid #1f5f2a;
+  border: 1px solid var(--accent);
   background: color-mix(in oklab, var(--paper) 92%, var(--accent));
   flex-shrink: 0;
 }
