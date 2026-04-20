@@ -4,8 +4,6 @@ date: 2026-04-19
 draft: false
 ---
 
-# Why AI Initiatives are Failing
-
 Artificial Intelligence should have produced at least a few hundred billion dollars of value by now, if everything being said about it were true. Yet we keep seeing article after article claiming that AI initiatives are failing, despite a ton of investment into the space. Every C-suite is pushing it. What gives?
 
 I believe there are three primary reasons, none of them having to do with the technology itself. If you still hold beliefs from 2023, such as "they hallucinate too much" or "I need to get better at prompting", you need to spend some time working with the latest models (and not just via chat!). The technology is as capable as it needs to be to effect all but the AGI-required claims. I think that nearly every profession with more than an 80% balance of work on the knowledge side is replacable with the current level of LLMs *when integrated into software products by experts in their fields*.

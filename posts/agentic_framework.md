@@ -4,8 +4,6 @@ date: 2026-04-18
 draft: false
 ---
 
-# A Framework for Agentic Systems
-
 In this post, we'll go over a mental framing I've been using recently, drawing on my knowledge of 9th grade biology. I propose that software in the "agentic era" can be fully characterized by what controls the **orchestrator** (the layer that drives control flow and decides what happens next) and what does the work as the **executor** (the layer that carries out each step). Each axis is either **probabilistic** or **deterministic**.
 
 In practice today (and in this post), probabilistic means an LLM. Technically, a slot machine RNG on a gambling website would also fit into this definition, but I don't think people are confused about how those work.
