@@ -27,7 +27,9 @@ Once you sit and play with an LLM via API, watch the logs of a thinking LLM, com
 I have seen some wildly smart people scoff at the idea that an LLM could take their job. Thus, they don't even use them or try to use them to their full potential. In almost every case, I think they're wrong. My reasoning is as follows:
 
 1) Can you define what it is you do?
-2) Can you decompose what you do into some number of distinct skills, processes, and tools? Even if that number is massive, and even if they relate recursively or in a messy web! Can you do it? I think literally everyone can. Even a brain surgeon. Heck, a pilot's job in the absolute worst case scenario is to *pull out the checklist and follow it*. If you sit and think about it for a long time, I bet you can fully define your job. You can also use an LLM to help you do this in a shorter amount of time.
+
+2) Can you decompose what you do into some number of distinct skills, processes, and tools? It's okay if that number is massive, and even if they relate recursively or in a messy web! Can you do it? I think literally everyone can. Even a brain surgeon. Heck, a pilot's job in the absolute worst case scenario is to *pull out the checklist and follow it*. If you sit and think about it for a long time, I bet you can fully define your job. You can also use an LLM to help you do this in a shorter amount of time.
+
 3) If you can define what you do, and you can decompose it, then you can break it into clear areas of concern (just like any good software), which makes it much easier for an LLM (especially the latest ones) to handle the wild reality in hard jobs.
 
 ---
