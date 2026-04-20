@@ -136,6 +136,7 @@ def parse_post(filepath):
         except ValueError:
             raise ValueError(f"{filepath}: 'date' must be YYYY-MM-DD, got {date!r}")
     else:
+        # Grab time from the file's last modified timestamp if not provided in frontmatter
         parsed_date = datetime.fromtimestamp(filepath.stat().st_mtime)
         date = parsed_date.strftime("%Y-%m-%d")
 
