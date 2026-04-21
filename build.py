@@ -248,7 +248,39 @@ def render_rss(posts):
 </rss>"""
 
 def render_robots():
-    return f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
+    # Known AI-training and AI-assistant crawlers to block site-wide.
+    blocked_agents = [
+        "GPTBot",
+        "OAI-SearchBot",
+        "ChatGPT-User",
+        "Google-Extended",
+        "CCBot",
+        "anthropic-ai",
+        "ClaudeBot",
+        "Claude-SearchBot",
+        "PerplexityBot",
+        "Perplexity-User",
+        "Bytespider",
+        "Applebot-Extended",
+        "Meta-ExternalAgent",
+        "meta-externalfetcher",
+    ]
+
+    lines = []
+    for agent in blocked_agents:
+        lines.extend([
+            f"User-agent: {agent}",
+            "Disallow: /",
+            "",
+        ])
+
+    lines.extend([
+        "User-agent: *",
+        "Allow: /",
+        f"Sitemap: {SITE_URL}/sitemap.xml",
+        "",
+    ])
+    return "\n".join(lines)
 
 def render_sitemap(posts, extra_paths=None):
     newest_date = posts[0]["date"] if posts else ""
